@@ -48,9 +48,10 @@ private:
 	
 		pneumatics = new Pneumatics( );
 		pneumatics->Start();
+		WaitCommand(5);
 		//vision
 		target_ = new BackboardFinder();
-		target_->Start();
+		//target_->Start();
 
 //cout << "clock rate "<<sysClkRateGet() << std::endl;
 #if !SDMD
@@ -149,7 +150,7 @@ private:
 	{
 		
 		Scheduler::GetInstance()->Run();
-		//cout << "Mode: " << CommandBase::drive->Mode() << std::endl;
+		cout << "Battery Voltage " << DriverStation::GetInstance()->GetBatteryVoltage() << std::endl;
 		
 
 		CommandBase::shooter->PeriodicCheck();

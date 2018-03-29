@@ -45,7 +45,7 @@ class VisionProcess {
    *
    * Subclasses should override this function to specify their own behavior.
    */
-  virtual void DoVision() = 0;
+  virtual double DoVision() = 0;
 
  private:
   bool enabled_;

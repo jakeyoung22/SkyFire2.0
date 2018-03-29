@@ -13,6 +13,8 @@ cmdBaseAimByCamera::cmdBaseAimByCamera()
 	camera = new BackboardFinder;
 
 
+
+
 }
 
 // Called just before this Command runs the first time
@@ -24,6 +26,8 @@ void cmdBaseAimByCamera::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void cmdBaseAimByCamera::Execute()
 {
+	float m_correction = camera->GetX();
+	float m_targetLock	= camera->HasLock();
 /*
 	if (camera->HasFreshTarget(true)
 	{
@@ -35,13 +39,14 @@ void cmdBaseAimByCamera::Execute()
 		//angulator->SetAngle(m_angAngle);
 	}
 	*/
-	std::cout << "Aim Bot Active";
-	if (camera->HasLock() == true)
+
+
+	if (m_targetLock == true)
 	{
-		std::cout << "X Axis Correction:" << camera->GetX() << "\n" ;
-		//drive->JoystickTankDrive(0.0, OI::scaleAxis(camera->GetX()));
-		drive->JoystickArcadeDrive(OI::Filter(camera->GetX()), 0.0 );
+		std::cout << "Correction Factor" << 0-camera->DoVision() << "\n" ;
+			drive->JoystickArcadeDrive(0.0f, OI::Filter(0-camera->DoVision())  );
 	}
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -50,10 +55,10 @@ bool cmdBaseAimByCamera::IsFinished()
 	//	If no target lock, exit
 	if (camera->HasLock()== true)
 	{
-		return false;
+		return true;
 	}
 	else
-		return true;
+		return false;
 
 
 }
@@ -61,7 +66,7 @@ bool cmdBaseAimByCamera::IsFinished()
 // Called once after isFinished returns true
 void cmdBaseAimByCamera::End()
 {
-	drive->JoystickTankDrive( 0.0f, 0.0f );
+	drive->JoystickArcadeDrive( 0.0f, 0.0f );
 }
 
 // Called when another command which requires one or more of the same
@@ -69,4 +74,8 @@ void cmdBaseAimByCamera::End()
 void cmdBaseAimByCamera::Interrupted()
 {
 	End();
+}
+
+void cmdBaseAimByCamera::SetOffsetAngle(double angle) {
+  offsetAngle_ = angle;
 }

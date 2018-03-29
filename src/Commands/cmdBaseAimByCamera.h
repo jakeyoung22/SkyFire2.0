@@ -9,16 +9,18 @@
 class cmdBaseAimByCamera: public CommandBase
 {
 public:
-	cmdBaseAimByCamera(  );
+	cmdBaseAimByCamera( );
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
+	void SetOffsetAngle(double angle);
 private:
 	BackboardFinder* camera;
 	BackboardFinder* target_;
 
+	float m_correction;
 	  bool foundTarget_;
 	  double offsetAngle_;
 };

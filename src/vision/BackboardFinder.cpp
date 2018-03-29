@@ -11,6 +11,7 @@ BackboardFinder::BackboardFinder() : VisionProcess() {
   printf("Starting Camera\n\n\n\n\n\n\n");
   width_ = 0;
   vDiff_ = 0;
+  x_	= 0;
 
   useTopForWidth_ = false;
 
@@ -30,13 +31,7 @@ bool BackboardFinder::SeesTarget() {
   return HasFreshTarget() && seesTarget_;
 }
 
-double BackboardFinder::GetX() {
-  if (-1.0 <= x_ && x_ <= 1.0) {
-    return x_;
-  } else {
-    return 0;
-  }
-}
+
 
 double BackboardFinder::GetDistance() {
   double w = width_;
@@ -50,7 +45,7 @@ double BackboardFinder::GetDistance() {
 		  0.925726454960144 * pow(width_, 2) +
 		  9.943136608058143e+02 * width_ + 9.943136608058143e+02;
 }
-/*
+
 double BackboardFinder::GetAngle() {
   //normalized x location (-1 to 1) times the pixels along
   //that one side = number of pixels off
@@ -63,20 +58,20 @@ double BackboardFinder::GetAngle() {
     ret += (orientation_ * 2.0 / 18.0);
   }
   return ret;
- // std::cout << " Rough Angle: " << ret << "\n";
+  std::cout << " Rough Angle: " << ret << "\n";
 
 }
-*/
+
 void BackboardFinder::SetUseSkew(bool useSkew) {
   useSkew_ = useSkew;
 }
 
-void BackboardFinder::DoVision() {
+double BackboardFinder::DoVision() {
   // Get image from camera
   AxisCamera &camera = AxisCamera::GetInstance("10.13.19.20");
   ColorImage img(IMAQ_IMAGE_RGB);
   if (!camera.GetImage(&img))
-    return;
+    return true;
   //
 
   // RGB Threshold -> BinaryImage
@@ -87,7 +82,7 @@ void BackboardFinder::DoVision() {
   // take out small things
   Image* image = bimg->GetImaqImage();
   if (!image)
-    return;
+    return true;
   int pKernel[9] = {1,1,1,1,1,1,1,1,1};
   StructuringElement structElem;
   structElem.matrixCols = 3;
@@ -190,11 +185,25 @@ void BackboardFinder::DoVision() {
 
   seesTarget_ = (particles->size() >= 1) && particles->size() < 5;
    x_ = seesTarget_ ? top.center_mass_x_normalized : 0.0;
+   xOffset_ = top.center_mass_x_normalized ;
 
+   //std::cout << " TargetLocked?: " << seesTarget_<< "\n";
+   //std::cout << " TargetLocked?: " << seesTarget_ <<  ", X Offset:" << x_ << "\n";
+if (x_ > 0.40){
+	return 0.40;
+	//std::cout << " Max Value " "\n";
+}
+ if (x_< -0.40){
+	return -0.40;
+	//std::cout << " Min Value " "\n";
+}
+else {
+	return x_;
+	//std::cout << " Correction Factor " << seesTarget_<< "\n";
+}
 
-	std::cout << " TargetLocked?: " << seesTarget_ << "\n";//", X Offset:" << x_ << "\n";
-
-
+  // std::cout << " TargetLocked?: " << seesTarget_ <<  ", X Offset:" << x_ << "\n";
+ //  return xOffset_;
   // Calculate angle on field based on ?
   width_ = top.boundingRect.width;
 
@@ -202,7 +211,15 @@ void BackboardFinder::DoVision() {
   lastUpdate_ = Timer::GetFPGATimestamp();
 }
 
-
+double BackboardFinder::GetX() {
+ // if (-1.0 <= x_ && x_ <= 1.0) {
+    return x_;
+    std::cout <<   " X Offset:" << x_ << "\n";
+  }// else {
+    //return 0;
+    //std::cout <<   " X Offset:" << "Bad Numbers" << "\n";
+  //}
+//}
 bool BackboardFinder::HasFreshTarget() {
   return (Timer::GetFPGATimestamp() - lastUpdate_ < .5); // 500ms
 }

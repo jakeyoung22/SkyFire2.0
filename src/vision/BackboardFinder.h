@@ -46,7 +46,7 @@ class BackboardFinder : public VisionProcess {
   /**
    * Updates sensor information regarding target data.
    */
-  void DoVision();
+  double DoVision();
 
   /**
    * Is our tracking working
@@ -63,10 +63,11 @@ class BackboardFinder : public VisionProcess {
   void LogCamera();
   void SetUseSkew(bool useSkew);
 
-
+  double x_;
 
  private:
-  double x_;
+  int xOffset_;
+
   double distance_;
   double angle_;
   bool seesTarget_;
