@@ -30,7 +30,13 @@ bool BackboardFinder::SeesTarget() {
   return HasFreshTarget() && seesTarget_;
 }
 
-
+double BackboardFinder::GetX() {
+  if (-1.0 <= x_ && x_ <= 1.0) {
+    return x_;
+  } else {
+    return 0;
+  }
+}
 
 double BackboardFinder::GetDistance() {
   double w = width_;
@@ -186,7 +192,7 @@ void BackboardFinder::DoVision() {
    x_ = seesTarget_ ? top.center_mass_x_normalized : 0.0;
 
 
-	std::cout << " TargetLocked?: " << seesTarget_ << ", X Offset:" << x_ << "\n";
+	std::cout << " TargetLocked?: " << seesTarget_ << "\n";//", X Offset:" << x_ << "\n";
 
 
   // Calculate angle on field based on ?
@@ -211,10 +217,4 @@ bool BackboardFinder::HasLock() {
 		return false;
 	}
 }
-double BackboardFinder::GetX() {
-  if (-1.0 <= x_ && x_ <= 1.0) {
-    return x_;
-  } else {
-    return 0;
-  }
-}
+

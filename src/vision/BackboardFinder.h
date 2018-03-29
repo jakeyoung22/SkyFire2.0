@@ -4,7 +4,7 @@
 #include "VisionProcess.h"
 
 /**
- * @author Tom Bottglieri
+ * @author jakey
  *
  * Task which updates information regarding distance, angle, and other vision-targeting information.
  */

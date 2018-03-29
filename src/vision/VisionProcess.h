@@ -4,7 +4,7 @@
 #include "WPILib.h"
 
 /**
- * @author Tom Bottglieri
+ * @author jakey
  *
  * Abstract superclass of tasks (run on a separate thread) involving vision targets.
  * Call Start() to begin the task and Stop() to terminate it.

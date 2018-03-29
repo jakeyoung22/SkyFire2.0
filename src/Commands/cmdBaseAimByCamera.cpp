@@ -40,22 +40,22 @@ void cmdBaseAimByCamera::Execute()
 	{
 		std::cout << "X Axis Correction:" << camera->GetX() << "\n" ;
 		//drive->JoystickTankDrive(0.0, OI::scaleAxis(camera->GetX()));
-		drive->JoystickArcadeDrive(0.0,  OI::scaleAxis(camera->GetX()) );
+		drive->JoystickArcadeDrive(OI::Filter(camera->GetX()), 0.0 );
 	}
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool cmdBaseAimByCamera::IsFinished()
 {
-/*	//	If no target lock, exit
+	//	If no target lock, exit
 	if (camera->HasLock()== true)
 	{
 		return false;
 	}
 	else
 		return true;
-		*/
-	return false;
+
+
 }
 
 // Called once after isFinished returns true

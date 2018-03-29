@@ -37,6 +37,7 @@ public:
 
 	
 	static float scaleAxis( float inp );
+	static float Filter(float input);
 };
 
 #endif

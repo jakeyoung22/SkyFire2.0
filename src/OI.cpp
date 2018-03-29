@@ -36,7 +36,7 @@ OI::OI() {
 //	Returns the scaled value of the primary X axis
 float OI::driveX()
 {
-	return scaleAxis(m_driverPad->GetRawAxis( DRV_AXIS_X )); // X axis value
+	return Filter(m_driverPad->GetRawAxis( DRV_AXIS_X )); // X axis value
 }
 
 //	Returns the scaled, inverted (if necessary) value of the primary Y axis
@@ -50,13 +50,13 @@ float OI::driveY()
 	if (DRV_AXIS_Y_INVERT)
 		ret = 0 - ret;
 	
-	return scaleAxis(ret);
+	return Filter(ret);
 }
 
 //	Returns the scaled value of the secondary X axis
 float OI::driveX2()
 {
-	return scaleAxis(m_driverPad->GetRawAxis( DRV_AXIS_X2 )); // X2 axis value
+	return Filter(m_driverPad->GetRawAxis( DRV_AXIS_X2 )); // X2 axis value
 }
 
 //	Returns the scaled, inverted (if necessary) value of the second Y axis
@@ -71,7 +71,7 @@ float OI::driveY2()
 	if (DRV_AXIS_Y2_INVERT)
 		ret = 0 - ret;
 	
-	return scaleAxis(ret);
+	return Filter(ret);
 }
 
 // New - Z axis for the Driver (triggers)
@@ -81,7 +81,7 @@ float OI::driveZ()
 
 	ret = m_driverPad->GetRawAxis( DRV_AXIS_Z ); // RT axis value
 
-	return scaleAxis(ret);
+	return Filter(ret);
 }
 
 
@@ -98,7 +98,7 @@ float OI::operatorY()
 	if (OPR_AXIS_Y_INVERT)
 		ret = 0 - ret;
 	
-	return scaleAxis(ret);
+	return Filter(ret);
 }
 
 //	Returns the scaled, inverted (if necessary) value of the second Y axis
@@ -113,7 +113,7 @@ float OI::operatorY2()
 	if (OPR_AXIS_Y2_INVERT)
 		ret = 0 - ret;
 	
-	return scaleAxis(ret);
+	return Filter(ret);
 }
 
 float OI::operatorZ()
@@ -122,7 +122,7 @@ float OI::operatorZ()
 	
 	ret = m_operatorPad->GetRawAxis( OPR_AXIS_Z ); // Z axis value
 	
-	return scaleAxis(ret);
+	return Filter(ret);
 }
 
 
@@ -140,3 +140,9 @@ float OI::scaleAxis( float inp )
 
 	return (pow( y, filteredInput ) - 1) / k * sign(inp); 
 }
+
+float OI::Filter(float in)
+{
+	return ( (fabs(in) < 0.01) ? 0 : in );
+}
+
