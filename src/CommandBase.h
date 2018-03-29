@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 
+
 #include "Commands/Command.h"
 //#include "Subsystems/ExampleSubsystem.h"
 #include "Subsystems/Drive.h"
@@ -21,6 +22,7 @@
  * examplesubsystem->Method()
  */
 class CommandBase: public Command {
+
 public:
 	CommandBase(const char *name);
 	CommandBase();

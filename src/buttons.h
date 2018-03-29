@@ -63,6 +63,7 @@
 
 #include "Commands/CmdShooterBlingToggle.h"
 #include "Commands/CmdShooterBlingOnToggle.h"
+#include "Commands/CmdBaseAimByCamera.h"
 
 #else
 //	Declare each button here:
@@ -82,7 +83,9 @@
 //BUTTON_SETUP( m_shooterpusherretract,             m_driverPad,   DRV_BTN_PUSHER_RETRACT,          WhenPressed, CmdShooterPusherRetract,                         )
 
 
-BUTTON_SETUP( m_shooterSpeedToggle,             m_driverPad,   DRV_BTN_SHOOTER_SPEED_TOGGLE,   WhenPressed, CmdShooterSpeedToggle,                   )
+//BUTTON_SETUP( m_shooterSpeedToggle,             m_driverPad,   DRV_BTN_SHOOTER_SPEED_TOGGLE,   WhenPressed, CmdShooterSpeedToggle,                   )
+BUTTON_SETUP( m_aimbot,             m_driverPad,   DRV_BTN_AIMBOT,   WhileHeld, cmdBaseAimByCamera,                   )
+
 BUTTON_SETUP( m_shooterMotorToggleButton,       m_driverPad, 	 DRV_BTN_SHOOTER_ON,             WhenPressed, CmdShooterMotorToggle,                   )
 BUTTON_SETUP( m_shooterClearJam,                m_driverPad,   DRV_BTN_CLEAR_JAM,              WhenPressed, CmdShooterClearJam,                0.25f )
 BUTTON_SETUP( m_shooterShootButton,             m_driverPad,   DRV_BTN_SHOOTER_SHOOT,          WhenPressed, CmdShooterShoot,                         )

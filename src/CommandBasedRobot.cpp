@@ -6,8 +6,9 @@
 #include "Commands/CmdReplayProgram.h"
 #include "Commands/CmdStopRecording.h"
 #include "Commands/CmdDriveChangeMode.h"
+#include "vision/BackboardFinder.h"
 
-
+class BackboardFinder;
 #include "Subsystems/Pneumatics.h"
 
 #include "Utilities.h"
@@ -24,6 +25,10 @@ private:
 	
 	SendableChooser *sc;
 	
+
+	  // Vision
+	  BackboardFinder* target_;
+
 public:
 	CommandBasedRobot()
 	{
@@ -43,6 +48,9 @@ private:
 	
 		pneumatics = new Pneumatics( );
 		pneumatics->Start();
+		//vision
+		target_ = new BackboardFinder();
+		target_->Start();
 
 //cout << "clock rate "<<sysClkRateGet() << std::endl;
 #if !SDMD
@@ -134,6 +142,7 @@ private:
 		cout << "Teleop Init complete. Try not to hit anyone" << std::endl;
 		CommandBase::shooter->SetFlashBling(false);
 
+
 	}
 	
 	virtual void TeleopPeriodic()
@@ -145,6 +154,9 @@ private:
 
 		CommandBase::shooter->PeriodicCheck();
 		CommandBase::shooter->UpdateBling();
+
+		  // Vision
+
 
 		
 #if !SDMD
