@@ -14,7 +14,7 @@ VisionProcess::~VisionProcess(){
 void VisionProcess::VisionTask(VisionProcess* vp) {
   while (true) {
     if (vp->enabled_ && vp->timer_->Get() > (1.0 / 30.0)) {
-      vp->DoVision();
+     // vp->DoVision();
       vp->timer_->Reset();
     }
     Wait(.002);//0.002

@@ -41,11 +41,12 @@ void cmdBaseAimByCamera::Execute()
 	*/
 
 
-	if (m_targetLock == true)
-	{
+	//if (camera->SeesTarget() == 1)
+//	{
 		std::cout << "Correction Factor" << 0-camera->DoVision() << "\n" ;
 			drive->JoystickArcadeDrive(0.0f, OI::Filter(0-camera->DoVision())  );
-	}
+	//}
+
 
 }
 
@@ -55,10 +56,10 @@ bool cmdBaseAimByCamera::IsFinished()
 	//	If no target lock, exit
 	if (camera->HasLock()== true)
 	{
-		return true;
-	}
-	else
 		return false;
+	}
+
+
 
 
 }
@@ -67,6 +68,8 @@ bool cmdBaseAimByCamera::IsFinished()
 void cmdBaseAimByCamera::End()
 {
 	drive->JoystickArcadeDrive( 0.0f, 0.0f );
+
+
 }
 
 // Called when another command which requires one or more of the same

@@ -189,12 +189,15 @@ double BackboardFinder::DoVision() {
 
    //std::cout << " TargetLocked?: " << seesTarget_<< "\n";
    //std::cout << " TargetLocked?: " << seesTarget_ <<  ", X Offset:" << x_ << "\n";
-if (x_ > 0.40){
-	return 0.40;
+
+   std::cout << " Correction Factor " << x_<< "\n";
+
+if (x_ > 0.4){
+	return 0.35;
 	//std::cout << " Max Value " "\n";
 }
- if (x_< -0.40){
-	return -0.40;
+else if (x_< -0.4){
+	return -0.35;
 	//std::cout << " Min Value " "\n";
 }
 else {
