@@ -89,7 +89,7 @@ double BackboardFinder::DoVision() {
   structElem.kernel = pKernel;
 
   std::cout << " Reached Initial Return " ;
-  return 0;
+  return true;
 
   // Filters particles based on their size.
   imaqSizeFilter(image, image, TRUE, 1, IMAQ_KEEP_LARGE, &structElem);
