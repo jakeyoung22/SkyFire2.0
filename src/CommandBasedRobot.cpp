@@ -9,6 +9,7 @@
 #include "vision/BackboardFinder.h"
 
 class BackboardFinder;
+//class AimBot;
 #include "Subsystems/Pneumatics.h"
 
 #include "Utilities.h"
@@ -50,6 +51,7 @@ private:
 		pneumatics->Start();
 		WaitCommand(5);
 		//vision
+		//target_ = new BackboardFinder();
 		target_ = new BackboardFinder();
 		target_->Start();
 

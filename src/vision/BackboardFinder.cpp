@@ -70,8 +70,7 @@ double BackboardFinder::DoVision() {
   // Get image from camera
   AxisCamera &camera = AxisCamera::GetInstance("10.13.19.20");
   ColorImage img(IMAQ_IMAGE_RGB);
-  if (!camera.GetImage(&img))
-    return true;
+
   //
 
   // RGB Threshold -> BinaryImage
@@ -81,14 +80,16 @@ double BackboardFinder::DoVision() {
 
   // take out small things
   Image* image = bimg->GetImaqImage();
-  if (!image)
-    return true;
+
   int pKernel[9] = {1,1,1,1,1,1,1,1,1};
   StructuringElement structElem;
   structElem.matrixCols = 3;
   structElem.matrixRows = 3;
   structElem.hexa = FALSE;
   structElem.kernel = pKernel;
+
+  std::cout << " Reached Initial Return " ;
+  return 0;
 
   // Filters particles based on their size.
   imaqSizeFilter(image, image, TRUE, 1, IMAQ_KEEP_LARGE, &structElem);
@@ -230,11 +231,11 @@ bool BackboardFinder::HasFreshTarget() {
 bool BackboardFinder::HasLock() {
 	if(seesTarget_ == 1)
 	{
-		return true;
+		return false;
 	}
 	else
 	{
-		return false;
+		return true;
 	}
 }
 

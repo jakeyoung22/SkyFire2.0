@@ -55,7 +55,7 @@ double Shooter::ReturnPIDInput()
 	// yourPot->SetAverageVoltage() / kYourMaxVoltage;
 #if PID
 	float t = FrontMotorSpeed();
-	cout << "FMS: " << t << " inp: "  << std::endl;
+	cout << "Actual Speed: " << t << std::endl;
 	return (FrontMotorSpeed()/SHOOTER_SPEED_MAX );
 #else
 	return 1;
@@ -68,7 +68,7 @@ void Shooter::UsePIDOutput(double output)
 	// e.g. yourMotor->Set(output);
 	
 #if PID
-	cout << "Set: " << output << std::endl;
+	cout << "PID Output Speed: " << output << std::endl;
 	SetRawMotorSpeed( output );
 #endif
 }
@@ -130,6 +130,8 @@ void Shooter::RunMotors( float frontSpeed )
 #if PID
 	SetSetpoint( frontSpeed );
 	Enable();
+	m_blingOn = true;
+	m_flashBling = true;
 #else
 	SetRawMotorSpeed( m_shooterRawSpeed );
 	m_running = true;
@@ -155,6 +157,8 @@ void Shooter::StopMotors()
 	//	Turn off PID control of the front motor.  Not sure if that stops it, so...
 #if PID
 	Disable();
+	m_blingOn = false;
+	m_flashBling = false;
 #else
 	m_running = false;
 	m_blingOn = false;
@@ -193,6 +197,7 @@ void Shooter::ShowMotorSpeed()
 {
 #if !SDMD
 	SmartDashboard::PutNumber( "Shooter Speed", FrontMotorSpeed() );
+	cout << "Shooter Speed:" << FrontMotorSpeed()<< std::endl;
 #endif
 }
 

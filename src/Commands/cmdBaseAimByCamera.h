@@ -3,6 +3,8 @@
 
 #include "../CommandBase.h"
 #include "../vision/BackboardFinder.h"
+//#include "../vision/AimBot.h"
+#include "../Subsystems/Drive.h"
 
 #include "WPILib.h"
 
@@ -19,6 +21,7 @@ public:
 private:
 	BackboardFinder* camera;
 	BackboardFinder* target_;
+	Drive 	* drive;
 
 	float m_correction;
 	  bool foundTarget_;

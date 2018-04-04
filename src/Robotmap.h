@@ -52,7 +52,7 @@ const UINT32 RELAY_CAMERA_LED				= 3;
 //	BY OBSERVATION.  I'm guessing we'll use RPS as our output units.
 #define SHOOTER_FRONT_ENC_CPR 32.0f
 //	
-#define SHOOTER_SPEED_FRONT   (SHOOTER_SPEED_MAX * 0.85)
+#define SHOOTER_SPEED_FRONT   (SHOOTER_SPEED_MAX )//* 0.85)
 //	Speed step down from Front to middle, and again from middle to back
 #define SHOOTER_SPEED_FACTOR 0.99
 //	Maximum observed shooter speed

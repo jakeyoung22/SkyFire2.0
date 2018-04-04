@@ -26,23 +26,11 @@ void cmdBaseAimByCamera::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void cmdBaseAimByCamera::Execute()
 {
-	float m_correction = camera->GetX();
-	float m_targetLock	= camera->HasLock();
-/*
-	if (camera->HasFreshTarget(true)
-	{
-		drive->JoystickTankDrive( OI::Filter(0-camera->getSteer()*0.86), OI::Filter(camera->getSteer()*0.86), false);
-	}
-	else
-	{
-		drive->JoystickTankDrive( 0.0f, 0.0f, false );
-		//angulator->SetAngle(m_angAngle);
-	}
-	*/
 
 
-	//if (camera->SeesTarget() == 1)
-//	{
+
+	//if (camera->SeesTarget() == true)
+	//{
 		std::cout << "Correction Factor" << 0-camera->DoVision() << "\n" ;
 			drive->JoystickArcadeDrive(0.0f, OI::Filter(0-camera->DoVision())  );
 	//}
@@ -56,9 +44,10 @@ bool cmdBaseAimByCamera::IsFinished()
 	//	If no target lock, exit
 	if (camera->HasLock()== true)
 	{
-		return false;
+		return true;
 	}
-
+	else
+		return false;
 
 
 
